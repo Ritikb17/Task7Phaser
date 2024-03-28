@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDrop } from "react-dnd";
-import "./app.css";
+// import "./app.css";
 
 export const ThisWeek = ({ onDrop }) => {
   const [droppedItems, setDroppedItems] = useState([]);

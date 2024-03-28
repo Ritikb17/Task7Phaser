@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import "./app.css";
+// import "./app.css";
 
 export const Today = ({ onDrop, onDragStart }) => {
   const [droppedItems, setDroppedItems] = useState([]);
