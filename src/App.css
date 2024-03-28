@@ -9,7 +9,7 @@
   border-style: outset;
   text-align: center;
   align-items: center;
-  margin-left: 30%;
+  margin-left: 40%;
   /* justify-content: center;/ */
 
 
@@ -29,7 +29,7 @@
  }
  .Today
  {
-  margin-left: 10%;
+  margin-left: 27%;
   border-style: outset;
   flex-wrap: wrap;
 
@@ -38,6 +38,7 @@
  {
   border-style: outset;
   flex-wrap: wrap;
+  
 
  }
  .container {
@@ -46,7 +47,7 @@
 }
 .ThisWeek
  {
-  margin-left: 10%;
+
   border-style: outset;
   flex-wrap: wrap;
 
