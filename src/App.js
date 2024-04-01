@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import "./App.css";
+// import "./App.css";
 
 const initialTasks = [
   { id: "task1", content: "Task 1" },
