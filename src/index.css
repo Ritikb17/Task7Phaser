@@ -1,0 +1,20 @@
+/* App.css */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .card-container {
+    display: flex;
+  }
+  
+  .card {
+    border: 1px solid #ccc;
+    padding: 8px;
+    margin: 8px;
+    background-color: #fff;
+    cursor: pointer;
+  }
+  
