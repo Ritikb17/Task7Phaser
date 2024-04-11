@@ -11,6 +11,7 @@ function DisplayCards({ v, uniqueId }) {
   }
 
   if (!Array.isArray(v)) {
+    // If `v` is not an array, render null or handle the case appropriately
     return null;
   }
 
@@ -47,10 +48,7 @@ function DisplayCards({ v, uniqueId }) {
                       id={`item-${index}`}
                     >
                       <ul>
-                        <div
-                          id={`card-container-${uniqueId}`}
-                          className="card-container"
-                        >
+                        <div id={`card-container-${uniqueId}`}>
                           {Object.entries(item).map(([key, value], i) => (
                             <li key={key}>
                               {i === 0 ? <strong>{value}</strong> : value}

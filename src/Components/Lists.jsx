@@ -22,7 +22,6 @@ const Lists = () => {
       {globalVariable.map((mainitem, mainindex) =>
         mainitem.map((subitem, subindex) => (
           <DisplayCards key={subindex} v={subitem} />
-          // Added key prop
         ))
       )}
     </div>
