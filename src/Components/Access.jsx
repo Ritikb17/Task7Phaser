@@ -4,6 +4,8 @@ import "../css/LoginSignin.css";
 import NewTodo from "./NewTodo";
 import Lists from "./Lists";
 import NewList from "./NewList";
+import SaveDataToFirestore from "./SaveDataToFirestore";
+import GetArrayFromFirestore from "./GetArrayFromFirestore";
 import { useGlobalState } from "./GlobalState";
 
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
@@ -19,11 +21,16 @@ const Access = () => {
   function logout() {
     signOut(auth)
       .then(() => {
+        <SaveDataToFirestore />;
         console.log("Logging out");
       })
       .catch((error) => {
         alert(error);
       });
+  }
+  function save() {
+    console.log("asdf");
+    <SaveDataToFirestore />;
   }
   function enableTodo() {
     changeIsDisable(!isDisable);
@@ -81,10 +88,17 @@ const Access = () => {
         type="button"
         className="btn btn-outline-secondary"
         onClick={() => {
-          console.log(globalVariable);
+          <GetArrayFromFirestore />;
         }}
       >
-        show
+        get
+      </button>
+      <button
+        type="button"
+        className="btn btn-outline-secondary"
+        onClick={save}
+      >
+        set
       </button>
     </div>
   );

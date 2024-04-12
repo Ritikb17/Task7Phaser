@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { useGlobalState } from "./GlobalState";
+import Guid from "./Signup";
 import Lists from "./Lists";
 const NewList = ({ CancelIt }) => {
   const [name, changeName] = useState([]);
@@ -15,7 +16,7 @@ const NewList = ({ CancelIt }) => {
     if (name == []) {
       alert("Give it a name");
     } else {
-      addToGlobalArray([[{ Name: name }]]);
+      addToGlobalArray([[{ id: Guid, Name: name }]]);
       console.log(globalVariable);
       <Lists />;
 

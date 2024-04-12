@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import Nav from "./Nav";
 import app from "./fb";
 import Access from "./Access";
+import { useGlobalState } from "./GlobalState";
 import {
   BrowserRouter as Router,
   Routes,
@@ -15,13 +16,16 @@ import {
   useNavigate,
 } from "react-router-dom";
 // import app from "./firebase";
-
+export let Guid = "";
 const auth = getAuth();
 const Signup = () => {
   const navigate = useNavigate();
   const [val, changeVal] = useState("");
   const [Pass, changePass] = useState("");
   const [name, changeName] = useState("");
+  const [guid, ChangeGuid] = useState("");
+  const { globalVariable, addToGlobalArray, removeFromGlobalArray } =
+    useGlobalState();
 
   function handleChangeName(event) {
     changeName(event.target.value);
@@ -37,6 +41,11 @@ const Signup = () => {
     changeVal("");
     changePass("");
   }
+  function setuid(uid) {
+    ChangeGuid(uid);
+    console.log("new guid is set", uid);
+    // addToGlobalArray([{ id: Guid }, []]);
+  }
   function setdata() {
     // console.log(val, Pass);
     if (val && Pass) {
@@ -45,7 +54,8 @@ const Signup = () => {
         .then((userCredential) => {
           // Signed up
           const user = userCredential.user;
-
+          const uid = userCredential.user.uid;
+          setuid(uid);
           updateProfile(user, {
             displayName: name,
           });
