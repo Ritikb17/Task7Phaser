@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useGlobalState } from "./GlobalState";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export const NewTodo = ({ CancelIt, name }) => {
   const [listName, changeListName] = useState("");
   const [listDescription, changeListDescription] = useState("");
-  const [listDate, changeListDate] = useState("");
+  const [listDate, changeListDate] = useState(null);
   const [listPriority, changeListPriority] = useState("");
   const { globalVariable, setGlobalVariable } = useGlobalState();
   const reff = [...globalVariable];
@@ -17,8 +19,12 @@ export const NewTodo = ({ CancelIt, name }) => {
     changeListDescription(event.target.value);
   }
 
-  function handleListChangeDate(event) {
-    changeListDate(event.target.value);
+  function handleListChangeDate(date) {
+    // setListDate(selectedDate);
+    const dateOnly = date.toISOString().split("T")[0];
+
+    console.log(dateOnly);
+    changeListDate(String(dateOnly));
   }
 
   function handleListChangePriority(event) {
@@ -56,6 +62,7 @@ export const NewTodo = ({ CancelIt, name }) => {
         }
       }
     }
+    CancelIt();
   }
 
   return (
@@ -86,25 +93,31 @@ export const NewTodo = ({ CancelIt, name }) => {
         <span className="input-group-text" id="basic-addon2">
           list Date
         </span>
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Enter Date "
-          aria-label="Username"
-          value={listDate}
-          onChange={handleListChangeDate}
-        />
+        <div>
+          <DatePicker
+            selected={listDate}
+            onChange={handleListChangeDate}
+            className="form-control"
+            placeholderText="Enter Date"
+            aria-label="Username"
+            showMonthDropdown
+            showYearDropdown
+            dropdownMode="select"
+          />
+        </div>
         <span className="input-group-text" id="basic-addon2">
           Priority
         </span>
-        <input
-          type="number"
+        <select
           className="form-control"
-          placeholder="Enter Priority"
           aria-label="Priority"
           value={listPriority}
           onChange={handleListChangePriority}
-        />
+        >
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+        </select>
         <button
           type="button"
           className="btn btn-outline-secondary"

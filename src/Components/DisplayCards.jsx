@@ -25,44 +25,47 @@ function DisplayCards({ v }) {
   };
 
   return (
-    <div>
+    <div className="card">
+      <h3>{v[0].Name}</h3>
       <Droppable droppableId={droppableId}>
         {(provided) => (
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
             id={`card-${uniqueId}`}
-            className="card"
           >
-            {v.map((item, index) => (
-              <Draggable
-                key={index}
-                draggableId={`item-${uniqueId}-${index}`}
-                index={index}
-              >
-                {(provided) => (
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    id={`item-${index}`}
+            {v.map(
+              (item, index) =>
+                index !== 0 && ( // Check if it's not the first element
+                  <Draggable
+                    key={index}
+                    draggableId={`item-${uniqueId}-${index}`}
+                    index={index}
                   >
-                    <ul>
+                    {(provided) => (
                       <div
-                        id={`card-container-${uniqueId}`}
-                        className="card-container"
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        id={`item-${index}`}
                       >
-                        {Object.entries(item).map(([key, value], i) => (
-                          <li key={key}>
-                            {i === 0 ? <strong>{value}</strong> : value}
-                          </li>
-                        ))}
+                        <ul>
+                          <div
+                            id={`card-container-${uniqueId}`}
+                            className="card-container"
+                          >
+                            {Object.entries(item).map(([key, value], i) => (
+                              <li key={key}>
+                                {i === 0 ? <strong>{value}</strong> : value}
+                              </li>
+                            ))}
+                          </div>
+                        </ul>
                       </div>
-                    </ul>
-                  </div>
-                )}
-              </Draggable>
-            ))}
+                    )}
+                  </Draggable>
+                )
+            )}
             {provided.placeholder}
           </div>
         )}

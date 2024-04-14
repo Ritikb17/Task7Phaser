@@ -4,13 +4,19 @@ import "../css/LoginSignin.css";
 import NewTodo from "./NewTodo";
 import Lists from "./Lists";
 import NewList from "./NewList";
-import SaveDataToFirestore from "./SaveDataToFirestore";
+// import SaveDataToFirestore from "./SaveDataToFirestore";
 import GetArrayFromFirestore from "./GetArrayFromFirestore";
 import { useGlobalState } from "./GlobalState";
+import { getFirestore } from "firebase/firestore";
 
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
+
+import { doc, set } from "firebase/firestore"; // From firebase/firestore
+// From firebase/auth
+
 const Access = () => {
   const msg = ["Create New List ", "Cancel"];
+  const db = getFirestore();
   const [name, changename] = useState("");
   const [todo, changetodo] = useState("");
   const [todoButtonmsg, changetodoButtonmsg] = useState(msg[0]);
@@ -18,10 +24,22 @@ const Access = () => {
   const [isVisiable, changeisVisiable] = useState(false);
   const { globalVariable } = useGlobalState();
   const auth = getAuth();
+
+  async function saveArrayToFirestore(globalArray) {
+    try {
+      console.log("this is sending data to firestone ");
+      const userRef = doc(db, "users", auth.currentUser.uid);
+      await userRef.setDoc({ localArray: globalArray }, { merge: true }); // Update only 'localArray' field
+      console.log("Array saved successfully to Firestore!");
+    } catch (error) {
+      console.error("Error saving array to Firestore:", error);
+    }
+  }
+
   function logout() {
+    saveArrayToFirestore(globalVariable);
     signOut(auth)
       .then(() => {
-        <SaveDataToFirestore />;
         console.log("Logging out");
       })
       .catch((error) => {
@@ -30,7 +48,7 @@ const Access = () => {
   }
   function save() {
     console.log("asdf");
-    <SaveDataToFirestore />;
+    // <SaveDataToFirestore />;
   }
   function enableTodo() {
     changeIsDisable(!isDisable);
