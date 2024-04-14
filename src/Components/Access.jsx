@@ -84,22 +84,6 @@ const Access = () => {
       >
         Log out
       </button>
-      <button
-        type="button"
-        className="btn btn-outline-secondary"
-        onClick={() => {
-          <GetArrayFromFirestore />;
-        }}
-      >
-        get
-      </button>
-      <button
-        type="button"
-        className="btn btn-outline-secondary"
-        onClick={save}
-      >
-        set
-      </button>
     </div>
   );
 };
