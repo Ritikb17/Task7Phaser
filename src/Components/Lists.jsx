@@ -12,6 +12,7 @@ const Lists = () => {
   const onDragEnd = (result) => {
     const reff = [...globalVariable];
     const { destination, source } = result;
+    if (!destination) return;
     console.log("Null destination", destination.droppableId);
     let grabb;
     let parts = destination.droppableId.split("-");
