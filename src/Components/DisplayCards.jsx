@@ -26,7 +26,9 @@ function DisplayCards({ v }) {
 
   return (
     <div className="card">
-      <h3>{v[0].Name}</h3>
+      <h3>
+        <strong>{v[0].Name}</strong>
+      </h3>
 
       {/* <Droppable droppableId={droppableId}>
         {(provided) => (
@@ -74,7 +76,9 @@ function DisplayCards({ v }) {
 
       {/* New droppable divs */}
       <div className="droppable-column">
-        <h6>Low Priority</h6>
+        <h6>
+          <u>Low Priority</u>
+        </h6>
         <Droppable droppableId={`${droppableId}-low`}>
           {(provided) => (
             <div
@@ -119,9 +123,13 @@ function DisplayCards({ v }) {
           )}
         </Droppable>
       </div>
+      <br />
+      <br />
 
       <div className="droppable-column">
-        <h6>Medium Priority</h6>
+        <h6>
+          <u>Medium Priority</u>
+        </h6>
         <Droppable droppableId={`${droppableId}-medium`}>
           {(provided) => (
             <div
@@ -166,9 +174,12 @@ function DisplayCards({ v }) {
           )}
         </Droppable>
       </div>
-
+      <br />
+      <br />
       <div className="droppable-column">
-        <h6>High Priority</h6>
+        <h6>
+          <u>High Priority</u>
+        </h6>
         <Droppable droppableId={`${droppableId}-high`}>
           {(provided) => (
             <div
@@ -213,6 +224,8 @@ function DisplayCards({ v }) {
           )}
         </Droppable>
       </div>
+      <br />
+      <br />
 
       {/* Render NewTodo component */}
       <div>
@@ -225,7 +238,7 @@ function DisplayCards({ v }) {
         className="btn btn-outline-secondary"
         onClick={createNewList}
       >
-        Add list
+        Add Task
       </button>
     </div>
   );

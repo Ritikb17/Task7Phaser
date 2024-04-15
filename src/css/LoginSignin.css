@@ -31,7 +31,12 @@ li {
   margin-bottom: 20px;
   margin-left: 25%; 
 }
-
+.card-box
+{
+  width: 200px; /* Change width as needed */
+  height: 200px; /* Change height as needed */
+  border: 1px solid black;
+}
 .two{
    background-color: rgb(209, 209, 215);
    text-align: center;
@@ -48,6 +53,7 @@ li {
     background-color: rgb(240, 243, 243);
 
 }
+
 .accessDiv
 {text-align: center;
     background-color: rgb(236, 236, 236);

@@ -4,6 +4,7 @@ import "../css/LoginSignin.css";
 import NewTodo from "./NewTodo";
 import Lists from "./Lists";
 import NewList from "./NewList";
+
 // import SaveDataToFirestore from "./SaveDataToFirestore";
 import GetArrayFromFirestore from "./GetArrayFromFirestore";
 import { useGlobalState } from "./GlobalState";
@@ -26,14 +27,14 @@ const Access = () => {
   const auth = getAuth();
 
   async function saveArrayToFirestore(globalArray) {
-    try {
-      console.log("this is sending data to firestone ");
-      const userRef = doc(db, "users", auth.currentUser.uid);
-      await userRef.setDoc({ localArray: globalArray }, { merge: true }); // Update only 'localArray' field
-      console.log("Array saved successfully to Firestore!");
-    } catch (error) {
-      console.error("Error saving array to Firestore:", error);
-    }
+    // try {
+    //   console.log("this is sending data to firestone ");
+    //   const userRef = doc(db, "users", auth.currentUser.uid);
+    //   await userRef.setDoc({ localArray: globalArray }, { merge: true }); // Update only 'localArray' field
+    //   console.log("Array saved successfully to Firestore!");
+    // } catch (error) {
+    //   console.error("Error saving array to Firestore:", error);
+    // }
   }
 
   function logout() {
@@ -46,10 +47,7 @@ const Access = () => {
         alert(error);
       });
   }
-  function save() {
-    console.log("asdf");
-    // <SaveDataToFirestore />;
-  }
+  // saveArrayToFirestore(gl);
   function enableTodo() {
     changeIsDisable(!isDisable);
     if (isDisable) {
