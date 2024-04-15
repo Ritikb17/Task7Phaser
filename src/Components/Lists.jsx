@@ -12,30 +12,58 @@ const Lists = () => {
   const onDragEnd = (result) => {
     const reff = [...globalVariable];
     const { destination, source } = result;
-    let r;
-    console.log("Source", source.index);
-    for (let a = 0; a < reff.length; a++) {
-      if (reff[a][0][0].Name === source.droppableId) {
-        console.log("found", reff[a][0][0].Name);
-        // reff[a][0][0].add(r);
-        r = reff[a][0][source.index];
-        reff[a][0].splice(source.index, 1);
+    console.log("Null destination", destination.droppableId);
+    let grabb;
+    let parts = destination.droppableId.split("-");
+    let parts2 = source.droppableId.split("-");
+    let destinationList = parts[0];
+    let destinationPriority = parts[1];
+    let sourceList = parts2[0];
+    let sourcePriority = parts2[1];
+    console.log("Source", source);
 
-        console.log("R is  ", r);
+    // for (let a = 0; a < reff.length; a++) {
+    //   if (reff[a][0][0].Name === source.droppableId) {
+    //     console.log("found", reff[a][0][0].Name);
+    //     // reff[a][0][0].add(r);
+    //     r = reff[a][0][source.index];
+    //     reff[a][0].splice(source.index, 1);
+
+    //     console.log("R is  ", r);
+    //   }
+    // }
+
+    // const newName = destination.droppableId;
+    // for (let a = 0; a < reff.length; a++) {
+    //   if (reff[a][0][0].Name === newName) {
+    //     // console.log("found", reff[a][0][0].Name);
+    //     // reff[a][0][0].add(r);
+    //     reff[a][0].push(r);
+    //     // console.log("done  ", reff);
+    //   }
+    // }
+
+    // console.log(newName);
+    console.log("destination List", destinationList);
+    console.log("destination Pariority", destinationPriority);
+    console.log("source List ", sourceList);
+    console.log("source Priority ", sourcePriority);
+    // REMOVING THE ELEMENT FROM THE SOURCE
+    for (let a = 0; a < reff.length; a++) {
+      if (reff[a][0][0].Name === sourceList) {
+        console.log("found", reff[a][0][source.index + 1]);
+        grabb = reff[a][0][source.index + 1];
+        reff[a][0].splice(source.index + 1, 1);
       }
     }
 
-    const newName = destination.droppableId;
     for (let a = 0; a < reff.length; a++) {
-      if (reff[a][0][0].Name === newName) {
-        // console.log("found", reff[a][0][0].Name);
-        // reff[a][0][0].add(r);
-        reff[a][0].push(r);
-        // console.log("done  ", reff);
+      if (reff[a][0][0].Name === destinationList) {
+        grabb.ListPriority = destinationPriority;
+        console.log("pushing ", grabb);
+        reff[a][0].push(grabb);
       }
     }
-
-    console.log(newName);
   };
 
   // function addTask() {
@@ -53,8 +81,8 @@ const Lists = () => {
   }
   return (
     <DragDropContext
-      onDragStart={() => {
-        console.log("dragging is started");
+      onDragStart={(DS) => {
+        console.log("dragging is started", DS);
       }}
       onDragUpdate={() => {
         console.log("dragging is update");
