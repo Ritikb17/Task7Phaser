@@ -40,9 +40,9 @@ export const NewTodo = ({ CancelIt, name }) => {
 
   function pushToCloud() {
     let r = {
-      ListName: listName,
-      ListDiscription: listDescription,
       ListDate: listDate,
+      ListDiscription: listDescription,
+      ListName: listName,
       ListPriority: listPriority,
     };
     if (

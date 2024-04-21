@@ -19,6 +19,7 @@ const Home = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
+        console.log("going to  access");
         Navigate("/access"); // Redirect to /access if authenticated
       } else {
         Navigate("/"); // Redirect to home if not authenticated

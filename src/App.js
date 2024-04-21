@@ -12,6 +12,8 @@ import Access from "./Components/Access";
 import Nav from "./Components/Nav";
 import Home from "./Components/Home";
 import { app } from "./Components/fb.js";
+import firebase from "firebase/app";
+import "firebase/firestore";
 
 import { getAuth, onAuthStateChanged, useNaviaget } from "firebase/auth";
 const App = () => {

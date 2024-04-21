@@ -9,6 +9,9 @@ export const GlobalStateProvider = ({ children }) => {
   const addToGlobalArray = (item) => {
     setGlobalVariable((prevGlobalVariable) => [...prevGlobalVariable, item]);
   };
+  const editGlobalArray = (item) => {
+    setGlobalVariable(item);
+  };
 
   const removeFromGlobalArray = (index) => {
     setGlobalVariable((prevGlobalVariable) =>
@@ -18,7 +21,12 @@ export const GlobalStateProvider = ({ children }) => {
 
   return (
     <GlobalStateContext.Provider
-      value={{ globalVariable, addToGlobalArray, removeFromGlobalArray }}
+      value={{
+        globalVariable,
+        addToGlobalArray,
+        removeFromGlobalArray,
+        editGlobalArray,
+      }}
     >
       {children}
     </GlobalStateContext.Provider>

@@ -77,27 +77,30 @@ const Lists = () => {
 
   // const [lists, changeLists] = useState([]); // Added state declaration
 
-  if (globalVariable === [{ id: Guid }, []]) {
-    return <div></div>;
-  }
+  // if (globalVariable === [{ id: Guid }, []]) {
+  //   return <div></div>;
+  // }
   return (
-    <DragDropContext
-      onDragStart={(DS) => {
-        console.log("dragging is started", DS);
-      }}
-      onDragUpdate={() => {
-        console.log("dragging is update");
-      }}
-      onDragEnd={onDragEnd}
-    >
-      <div>
-        {globalVariable.map((mainitem, mainindex) =>
-          mainitem.map((subitem, subindex) => (
-            <DisplayCards key={subindex} v={subitem} />
-          ))
-        )}
-      </div>
-    </DragDropContext>
+    <div>
+      {console.log(" in this Lists with", globalVariable)}
+      <DragDropContext
+        onDragStart={(DS) => {
+          console.log("dragging is started", DS);
+        }}
+        onDragUpdate={() => {
+          console.log("dragging is update");
+        }}
+        onDragEnd={onDragEnd}
+      >
+        <div>
+          {globalVariable.map((mainitem, mainindex) =>
+            mainitem.map((subitem, subindex) => (
+              <DisplayCards key={subindex} v={subitem} />
+            ))
+          )}
+        </div>
+      </DragDropContext>
+    </div>
   );
 };
 

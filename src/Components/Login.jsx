@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Nav from "./Nav";
+import { useGlobalState } from "./GlobalState";
 import "../css/LoginSignin.css";
+import { getDatabase, ref, set, onValue } from "firebase/database";
 import Access from "./Access";
 // import { CreateUserWithEmailAndPassword } from "./firebase/auth";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
@@ -15,6 +17,8 @@ const Login = () => {
   const navigate = useNavigate();
   const [val, changeVal] = useState("");
   const [Pass, changePass] = useState("");
+  const { globalVariable, addToGlobalArray, editGlobalArray } =
+    useGlobalState();
   function submitClicked() {
     console.log(val);
     console.log(Pass);
@@ -29,27 +33,51 @@ const Login = () => {
     changeVal("");
     changePass("");
   }
-  function setdata() {
+  const setdata = async () => {
+    let copy = [...globalVariable];
     if (val && Pass) {
-      /// LOGGING THE USER ///
-
+      // Getting Firebase Database and Authentication instances
+      const db = getDatabase();
       const auth = getAuth();
-      signInWithEmailAndPassword(auth, val, Pass)
-        .then((userCredential) => {
-          const user = userCredential.user;
 
-          reset();
-          navigate("/");
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          alert(errorMessage);
-        });
+      // Sign in the user with email and password
+      try {
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          val,
+          Pass
+        );
+        const user = userCredential.user;
+        console.log("Logging in", user);
+
+        // Reference to the user's data in the database
+        const userRef = ref(db, `${user.displayName}`);
+        // Use `await` in `onValue` listener to handle data
+        try {
+          await onValue(userRef, (snapshot) => {
+            const data = snapshot.val();
+            // console.log(data.reff);
+            console.log("Current globalVariable:", globalVariable);
+            // console.log("Adding to globalVariable:", data.reff);
+
+            editGlobalArray(data.reff);
+            console.log("global value is ", globalVariable);
+          });
+        } catch (err) {
+          console.log("leave ");
+        }
+
+        // Resetting input values and navigating
+        reset();
+        navigate("/");
+      } catch (error) {
+        const errorMessage = error.message;
+        alert(errorMessage);
+      }
     } else {
-      alert("fill all the input ");
+      alert("Please fill in all the input fields");
     }
-  }
+  };
 
   return (
     <div>

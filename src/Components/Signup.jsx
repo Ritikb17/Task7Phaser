@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import Nav from "./Nav";
 import app from "./fb";
 import Access from "./Access";
+import { getDatabase, ref, set, onValue } from "firebase/database";
 import { useGlobalState } from "./GlobalState";
 import {
   BrowserRouter as Router,
@@ -60,7 +61,10 @@ const Signup = () => {
             displayName: name,
           });
           reset();
-
+          // let db = getDatabase();
+          // set(ref(db, `${name}`), {
+          //   globalVariable,
+          // })
           navigate("/");
           // <Link to="/access" />;
         })

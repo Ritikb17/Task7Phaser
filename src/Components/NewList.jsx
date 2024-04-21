@@ -16,7 +16,7 @@ const NewList = ({ CancelIt }) => {
     if (name == []) {
       alert("Give it a name");
     } else {
-      addToGlobalArray([[{ id: Guid, Name: name }]]);
+      addToGlobalArray([[{ Name: name }]]);
       console.log(globalVariable);
       <Lists />;
 
