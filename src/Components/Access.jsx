@@ -221,13 +221,6 @@ const Access = () => {
       >
         Log out
       </button>
-      <button
-        type="button"
-        className="btn btn-outline-secondary"
-        onClick={saveArrayToFirestore}
-      >
-        Log out
-      </button>
     </div>
   );
 };
