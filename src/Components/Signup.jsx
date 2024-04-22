@@ -57,6 +57,8 @@ const Signup = () => {
           const user = userCredential.user;
           const uid = userCredential.user.uid;
           setuid(uid);
+
+          console.log(globalVariable);
           updateProfile(user, {
             displayName: name,
           });

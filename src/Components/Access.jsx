@@ -87,6 +87,10 @@ const Access = () => {
 
     let lstnme;
     const reff = [...globalVariable];
+    console.log(
+      "updated",
+      (reff[0][0][0].updateTime = new Date().toLocaleTimeString())
+    );
     console.log("value of reff is ", reff);
     set(ref(db, `${name}`), {
       reff,
@@ -214,6 +218,13 @@ const Access = () => {
         type="button"
         className="btn btn-outline-secondary"
         onClick={logout}
+      >
+        Log out
+      </button>
+      <button
+        type="button"
+        className="btn btn-outline-secondary"
+        onClick={saveArrayToFirestore}
       >
         Log out
       </button>
