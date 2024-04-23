@@ -16,14 +16,16 @@ const NewList = ({ CancelIt }) => {
     if (name == []) {
       alert("Give it a name");
     } else {
-      console.log(
-        "taskList ",
-        globalVariable[0][0][0].TaskList.push({
-          Name: name,
-          CreationTime: new Date().toLocaleTimeString(),
-        })
-      );
-      addToGlobalArray([[{ Name: name }]]);
+      addToGlobalArray([
+        [{ Name: name, CreationTime: new Date().toLocaleTimeString() }],
+      ]);
+      // console.log(
+      //   "taskList ",
+      //   globalVariable[0][0][0].TaskList.push({
+      //     Name: name,
+      //     CreationTime: new Date().toLocaleTimeString(),
+      //   })
+      // );
       console.log(globalVariable);
       <Lists />;
 

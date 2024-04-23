@@ -228,6 +228,7 @@ const Access = () => {
   }, [auth]);
   return (
     <div className="accessDiv">
+      {getData}
       <Nav />
 
       <h1 style={{ textAlign: "center", color: "grey" }}>WELCOME {name}</h1>
