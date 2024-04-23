@@ -10,7 +10,7 @@ import isEqual from "lodash/isEqual";
 import GetArrayFromFirestore from "./GetArrayFromFirestore";
 import { useGlobalState } from "./GlobalState";
 import { getFirestore } from "firebase/firestore";
-
+import GlobalPass from "./Signup";
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 import {
   doc,
@@ -35,17 +35,42 @@ import { getDatabase, ref, set, onValue } from "firebase/database";
 const Access = () => {
   const msg = ["Create New List ", "Cancel"];
   // const db = getFirestore();
-  const [name, changename] = useState("");
+  const [name, changename] = useState("m");
   const [email, changeEmail] = useState("");
   const [todo, changetodo] = useState("");
   const [todoButtonmsg, changetodoButtonmsg] = useState(msg[0]);
   const [isDisable, changeIsDisable] = useState(false);
   const [isVisiable, changeisVisiable] = useState(false);
-  const { globalVariable } = useGlobalState();
+  const { globalVariable, editGlobalArray } = useGlobalState();
   const navigate = useNavigate();
 
   const auth = getAuth();
+  const db = getDatabase();
 
+  async function getData() {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        changename(user.displayName);
+        changeEmail(user.email);
+      } else {
+        changename("");
+      }
+    });
+    const userRef = ref(db, name);
+    try {
+      await onValue(userRef, (snapshot) => {
+        const data = snapshot.val();
+        // console.log(data.reff);
+        console.log("Current globalVariable:", globalVariable);
+        // console.log("Adding to globalVariable:", data.reff);
+
+        editGlobalArray(data.reff);
+        console.log("global value is ", globalVariable);
+      });
+    } catch (err) {
+      console.log("leave ");
+    }
+  }
   async function saveArrayToFirestore() {
     // try {
     //   console.log("this is sending data to firestone ");
@@ -65,19 +90,6 @@ const Access = () => {
     //   console.log("No such document!");
     // }
 
-    // const usersRef = collection(db, "user");
-    // getDocs(usersRef)
-    //   .then((querySnapshot) => {
-    //     const allUserData = [];
-    //     querySnapshot.forEach((doc) => {
-    //       allUserData.push(doc.data());
-    //     });
-    //     console.log("All user data:", allUserData); // This will be an array of user objects
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error getting documents:", error);
-    //   });
-
     let db = getDatabase();
     // set(ref(db, "users" + "uid1100"), {
     //   username: "second name",
@@ -87,13 +99,9 @@ const Access = () => {
 
     let lstnme;
     const reff = [...globalVariable];
-    console.log(
-      "updated",
-      (reff[0][0][0].updateTime = new Date().toLocaleTimeString())
-    );
     console.log("value of reff is ", reff);
     set(ref(db, `${name}`), {
-      reff,
+      globalVariable,
     }).then(() => {
       console.log("data is being send to the cloud ");
       const starCountRef = ref(db, `${name}`);
@@ -157,10 +165,10 @@ const Access = () => {
   }
 
   function logout() {
-    saveArrayToFirestore(globalVariable);
     signOut(auth)
       .then(() => {
         console.log("Logging out");
+        saveArrayToFirestore(globalVariable);
       })
       .catch((error) => {
         alert(error);
@@ -176,6 +184,36 @@ const Access = () => {
       changetodoButtonmsg(msg[1]);
     }
   }
+
+  function handleListChange(event) {
+    changetodo(event.target.value);
+  }
+  const handleCancelRendering = () => {
+    changeIsDisable(false);
+    enableTodo();
+  };
+  console.log("above refresh ");
+  const h = [
+    [
+      {
+        Password: GlobalPass,
+        CreatinonTime: new Date().toLocaleTimeString(),
+      },
+    ],
+  ];
+  let bool = false;
+  let oldClient = false;
+  if (globalVariable === h) {
+    oldClient = false;
+  } else {
+    oldClient = true;
+  }
+  if ((globalVariable === h || globalVariable.length === 0) && bool) {
+    console.log("refreshing ");
+    getData();
+    bool = false;
+  }
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -186,17 +224,8 @@ const Access = () => {
       }
     });
 
-    // Cleanup function: Unsubscribe from listener on component unmount
     return unsubscribe;
   }, [auth]);
-  function handleListChange(event) {
-    changetodo(event.target.value);
-  }
-  const handleCancelRendering = () => {
-    changeIsDisable(false);
-    enableTodo();
-  };
-
   return (
     <div className="accessDiv">
       <Nav />
@@ -204,7 +233,7 @@ const Access = () => {
       <h1 style={{ textAlign: "center", color: "grey" }}>WELCOME {name}</h1>
       {isDisable && <NewList CancelIt={handleCancelRendering} />}
 
-      <Lists />
+      {oldClient && <Lists />}
 
       <button
         type="button"

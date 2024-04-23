@@ -2,13 +2,8 @@ import { React, useState, useEffect } from "react";
 import { useGlobalState } from "./GlobalState";
 import Guid from "./Signup";
 import Lists from "./Lists";
-// import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
-import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 const NewList = ({ CancelIt }) => {
   const [name, changeName] = useState([]);
-  const auth = getAuth();
-
-  const [eml, changeEmail] = useState();
   //   const { globalVariable, setGlobalVariable } = useGlobalState();
   const { globalVariable, addToGlobalArray, removeFromGlobalArray } =
     useGlobalState();
@@ -21,38 +16,26 @@ const NewList = ({ CancelIt }) => {
     if (name == []) {
       alert("Give it a name");
     } else {
-      addToGlobalArray([
-        [
-          {
-            Name: name,
-            Email: eml,
-            SignUpTime: new Date().toLocaleTimeString(),
-            updateTime: new Date().toLocaleTimeString(),
-          },
-        ],
-      ]);
+      console.log(
+        "taskList ",
+        globalVariable[0][0][0].TaskList.push({
+          Name: name,
+          CreationTime: new Date().toLocaleTimeString(),
+        })
+      );
+      addToGlobalArray([[{ Name: name }]]);
       console.log(globalVariable);
       <Lists />;
 
       CancelIt();
     }
   }
-  // useEffect(() => {
-  //   // CancelIt();
-  //   changeName([]);
-  //   console.log(globalVariable);
-  // }, [globalVariable]);
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // eml = user.email;
-        changeEmail(user.email);
-      }
-    });
+    // CancelIt();
+    changeName([]);
+    console.log(globalVariable);
+  }, [globalVariable]);
 
-    // Cleanup function: Unsubscribe from listener on component unmount
-    return unsubscribe;
-  }, [auth]);
   return (
     <div id="one" className="shadow-lg p-3 mb-5 bg-body-tertiary rounded">
       <div className="input-group mb-3">

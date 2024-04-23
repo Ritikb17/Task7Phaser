@@ -1,6 +1,7 @@
 import React, { useState } from "react"; // Changed import statement to include React
 import { useGlobalState } from "./GlobalState";
 import DisplayCards from "./DisplayCards";
+import GlobalPass from "./Signup";
 import { DragDropContext } from "react-beautiful-dnd";
 import NewTodo from "./NewTodo";
 
@@ -8,6 +9,19 @@ import Guid from "./Signup";
 const Lists = () => {
   const [isEnable, changeIsEnable] = useState(false);
   const { globalVariable } = useGlobalState();
+  if (
+    globalVariable ===
+    [
+      [
+        {
+          Password: GlobalPass,
+          CreatinonTime: new Date().toLocaleTimeString(),
+        },
+      ],
+    ]
+  ) {
+    return <></>;
+  }
 
   const onDragEnd = (result) => {
     const reff = [...globalVariable];
